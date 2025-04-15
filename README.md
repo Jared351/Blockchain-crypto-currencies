@@ -18,4 +18,5 @@
 ## 注意事项
 
 - 运行前请确保已下载DAppSCAN数据集
+- DAppSCAN数据集地址 https://github.com/InPlusLab/DAppSCAN
 - 评估结果将保存在`evaluation_results/`目录下
