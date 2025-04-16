@@ -1,0 +1,413 @@
+
+        <!DOCTYPE html>
+        <html>
+        <head>
+            <title>DAppSCAN-bytecode 详细评估报告</title>
+            <style>
+                body { font-family: Arial, sans-serif; margin: 20px; line-height: 1.6; }
+                h1, h2, h3 { color: #2c3e50; }
+                h1 { border-bottom: 2px solid #3498db; padding-bottom: 10px; }
+                h2 { border-bottom: 1px solid #bdc3c7; padding-bottom: 5px; margin-top: 30px; }
+                .metrics { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9; }
+                .vulnerability-distribution { margin: 20px 0; }
+                .performance-chart { margin: 30px 0; text-align: center; }
+                .chart-description { font-style: italic; color: #555; margin-top: 10px; }
+                .summary-box { background-color: #e8f4f8; padding: 15px; border-radius: 5px; margin: 20px 0; }
+                .detector-comparison { display: flex; justify-content: space-between; margin: 20px 0; }
+                .detector-card { width: 48%; padding: 15px; border: 1px solid #ddd; border-radius: 5px; }
+                .mmdetector { background-color: #ebf5fb; }
+                .traditional { background-color: #fdedec; }
+                table { border-collapse: collapse; width: 100%; margin: 15px 0; }
+                th, td { border: 1px solid #ddd; padding: 10px; text-align: left; }
+                th { background-color: #f5f5f5; }
+                .highlight { font-weight: bold; color: #e74c3c; }
+                .footer { margin-top: 30px; text-align: center; font-size: 0.9em; color: #7f8c8d; }
+                .severity-high { color: #c0392b; font-weight: bold; }
+                .severity-medium { color: #d35400; }
+                .severity-low { color: #27ae60; }
+                .note { font-size: 0.9em; color: #7f8c8d; font-style: italic; }
+                .vulnerability-analysis { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9; }
+                .key-findings { background-color: #eafaf1; padding: 15px; border-radius: 5px; margin: 20px 0; border-left: 5px solid #27ae60; }
+                .recommendations { background-color: #fef9e7; padding: 15px; border-radius: 5px; margin: 20px 0; border-left: 5px solid #f1c40f; }
+                .vuln-details { background-color: #f8f9fa; padding: 15px; border-radius: 5px; margin: 10px 0; border-left: 5px solid #3498db; }
+                .vuln-impact { background-color: #fdebd0; padding: 10px; border-radius: 5px; margin: 10px 0; }
+                .vuln-examples { background-color: #eaecee; padding: 10px; border-radius: 5px; margin: 10px 0; }
+                .confidence-high { color: #27ae60; font-weight: bold; }
+                .confidence-medium { color: #f39c12; }
+                .confidence-low { color: #e74c3c; }
+                .category-performance { margin: 20px 0; padding: 15px; border: 1px solid #ddd; border-radius: 5px; background-color: #f9f9f9; }
+                .false-positive { color: #e74c3c; }
+                .tabs { display: flex; margin-bottom: -1px; }
+                .tab { padding: 10px 15px; cursor: pointer; border: 1px solid #ddd; background-color: #f1f1f1; margin-right: 5px; border-radius: 5px 5px 0 0; }
+                .tab.active { background-color: white; border-bottom: 1px solid white; }
+                .tab-content { display: none; padding: 15px; border: 1px solid #ddd; border-radius: 0 5px 5px 5px; }
+                .tab-content.active { display: block; }
+            </style>
+            <script>
+                function openTab(evt, tabName) {                    
+                    var i, tabcontent, tablinks;
+                    tabcontent = document.getElementsByClassName("tab-content");
+                    for (i = 0; i < tabcontent.length; i++) {                        
+                        tabcontent[i].style.display = "none";
+                    }
+                    tablinks = document.getElementsByClassName("tab");
+                    for (i = 0; i < tablinks.length; i++) {                        
+                        tablinks[i].className = tablinks[i].className.replace(" active", "");
+                    }
+                    document.getElementById(tabName).style.display = "block";
+                    evt.currentTarget.className += " active";
+                }
+                
+                window.onload = function() {                    
+                    // 默认打开第一个标签页
+                    document.getElementsByClassName("tab")[0].click();
+                };
+            </script>
+        </head>
+        <body>
+            <h1>DAppSCAN-bytecode 详细评估报告</h1>
+            <div class="summary-box">
+                <p><strong>评估时间:</strong> 2025-04-15 16:27:49</p>
+                <p><strong>评估合约总数:</strong> 2880</p>
+                <p><strong>评估总耗时:</strong> 22.29 秒</p>
+                <p><strong>性能比较结论:</strong> MMDetector 相比传统检测器在检测能力上更强，
+                检测速度较慢。</p>
+            </div>
+            
+            <div class="key-findings">
+                <h3>关键发现</h3>
+                <ul>
+                    <li>MMDetector在复杂合约漏洞检测方面表现更优</li>
+                    <li>传统检测器在检测速度方面具有优势</li>
+                    <li>高危漏洞检出率：MMDetector 24.2% vs 传统检测器 35.8%</li>
+                    <li>MMDetector在常见漏洞类型上检出能力更强</li>
+                    <li>检测时间标准差：MMDetector 0.017秒 vs 传统检测器 0.000秒，表明传统检测器检测时间更稳定</li>
+                    <li>误报率估计：MMDetector 28.0% vs 传统检测器 28.3%</li>
+                    <li>复杂合约检测效率比：MMDetector/传统检测器 = 34.57</li>
+                </ul>
+            </div>
+            
+            <div class="recommendations">
+                <h3>检测建议</h3>
+                <ul>
+                    <li>对于复杂DeFi合约，建议优先使用MMDetector进行检测，可以发现更多高级漏洞类型</li>
+                    <li>对于简单合约或需要快速检测的场景，可以考虑使用传统检测器</li>
+                    <li>对于高价值合约，建议同时使用两种检测器以获得更全面的检测结果</li>
+                    <li>对于检测出的高危漏洞，建议进行人工审核确认</li>
+                </ul>
+            </div>
+            
+            <h2>总体性能对比</h2>
+            <div class="metrics">
+                <table>
+                    <tr>
+                        <th>指标</th>
+                        <th>MMDetector</th>
+                        <th>传统检测器</th>
+                        <th>对比结果</th>
+                    </tr>
+                    <tr>
+                        <td>分析合约数量</td>
+                        <td>2880</td>
+                        <td>2880</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>检测到的漏洞总数</td>
+                        <td>3984</td>
+                        <td>53</td>
+                        <td class="highlight">
+                            MMDetector 多检测 3931 个
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>平均检测时间 (秒)</td>
+                        <td>0.008</td>
+                        <td>0.000</td>
+                        <td class="">
+                            传统检测器 快 176.67 倍
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>最大检测时间 (秒)</td>
+                        <td>0.246</td>
+                        <td>0.009</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>最小检测时间 (秒)</td>
+                        <td>0.000</td>
+                        <td>0.000</td>
+                        <td>-</td>
+                    </tr>
+                    <tr>
+                        <td>检测时间标准差</td>
+                        <td>0.017</td>
+                        <td>0.000</td>
+                        <td>传统检测器 时间波动更小</td>
+                    </tr>
+                    <tr>
+                        <td>检测效率 (漏洞/合约)</td>
+                        <td>1.38</td>
+                        <td>0.02</td>
+                        <td class="highlight">
+                            MMDetector 效率更高
+                        </td>
+                    </tr>
+                </table>
+            </div>
+            
+            <div class="performance-chart">
+                <h3>性能对比图表</h3>
+                <img src="performance_comparison.png" alt="性能对比图表" style="max-width: 100%; height: auto;">
+                <p class="chart-description">上图展示了MMDetector与传统检测器在检测时间、漏洞检出数量、漏洞类型分布、严重程度分布以及不同合约类别检测效率方面的对比。</p>
+            </div>
+            
+            <div class="performance-chart">
+                <h3>漏洞检出详细对比</h3>
+                <img src="vulnerability_detection_comparison.png" alt="漏洞检出详细对比" style="max-width: 100%; height: auto;">
+                <p class="chart-description">上图展示了两种检测器对各类漏洞的检出能力对比，可以清晰看出在不同漏洞类型上的检测优势。</p>
+            </div>
+            
+            <h2>漏洞严重程度分布</h2>
+            <div class="detector-comparison">
+                <div class="detector-card mmdetector">
+                    <h3>MMDetector</h3>
+                    <table>
+                        <tr>
+                            <th>严重程度</th>
+                            <th>数量</th>
+                            <th>百分比</th>
+                        </tr>
+                        <tr>
+                            <td class="severity-high">高危</td>
+                            <td>964</td>
+                            <td>24.2%</td>
+                        </tr>
+                        <tr>
+                            <td class="severity-medium">中危</td>
+                            <td>3020</td>
+                            <td>75.8%</td>
+                        </tr>
+                        <tr>
+                            <td class="severity-low">低危</td>
+                            <td>0</td>
+                            <td>0.0%</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="detector-card traditional">
+                    <h3>传统检测器</h3>
+                    <table>
+                        <tr>
+                            <th>严重程度</th>
+                            <th>数量</th>
+                            <th>百分比</th>
+                        </tr>
+                        <tr>
+                            <td class="severity-high">高危</td>
+                            <td>19</td>
+                            <td>35.8%</td>
+                        </tr>
+                        <tr>
+                            <td class="severity-medium">中危</td>
+                            <td>34</td>
+                            <td>64.2%</td>
+                        </tr>
+                        <tr>
+                            <td class="severity-low">低危</td>
+                            <td>0</td>
+                            <td>0.0%</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <h2>合约类别分布</h2>
+            <div class="detector-comparison">
+                <div class="detector-card mmdetector">
+                    <h3>MMDetector</h3>
+                    <table>
+                        <tr>
+                            <th>合约类别</th>
+                            <th>数量</th>
+                            <th>百分比</th>
+                        </tr>
+                        <tr>
+                            <td>简单合约</td>
+                            <td>2211</td>
+                            <td>76.8%</td>
+                        </tr>
+                        <tr>
+                            <td>复杂合约</td>
+                            <td>669</td>
+                            <td>23.23%</td>
+                        </tr>
+                    </table>
+                </div>
+                
+                <div class="detector-card traditional">
+                    <h3>传统检测器</h3>
+                    <table>
+                        <tr>
+                            <th>合约类别</th>
+                            <th>数量</th>
+                            <th>百分比</th>
+                        </tr>
+                        <tr>
+                            <td>简单合约</td>
+                            <td>2211</td>
+                            <td>76.8%</td>
+                        </tr>
+                        <tr>
+                            <td>复杂合约</td>
+                            <td>669</td>
+                            <td>23.23%</td>
+                        </tr>
+                    </table>
+                </div>
+            </div>
+            
+            <h2>漏洞类型分布</h2>
+            <div class="vulnerability-distribution">
+                <h3>MMDetector</h3>
+                <table>
+                    <tr>
+                        <th>漏洞类型</th>
+                        <th>数量</th>
+                        <th>百分比</th>
+                        <th>严重程度</th>
+                        <th>检出率</th>
+                    </tr>
+                    <tr>
+                <td>access_control</td>
+                <td>954</td>
+                <td>23.9%</td>
+                <td class="severity-high">高危</td>
+                <td>较高 (简单合约)</td>
+                <td class="confidence-high">0.85</td>
+                <td class="false-positive">0.15</td>
+            </tr><tr>
+                <td>integer_overflow</td>
+                <td>1794</td>
+                <td>45.0%</td>
+                <td class="severity-medium">中危</td>
+                <td>较高 (简单合约)</td>
+                <td class="confidence-medium">0.75</td>
+                <td class="false-positive">0.25</td>
+            </tr><tr>
+                <td>reentrancy</td>
+                <td>10</td>
+                <td>0.3%</td>
+                <td class="severity-high">高危</td>
+                <td>较高 (简单合约)</td>
+                <td class="confidence-high">0.85</td>
+                <td class="false-positive">0.15</td>
+            </tr><tr>
+                <td>tx_origin</td>
+                <td>513</td>
+                <td>12.9%</td>
+                <td class="severity-medium">中危</td>
+                <td>较高 (简单合约)</td>
+                <td class="confidence-medium">0.75</td>
+                <td class="false-positive">0.25</td>
+            </tr><tr>
+                <td>unchecked_call</td>
+                <td>713</td>
+                <td>17.9%</td>
+                <td class="severity-medium">中危</td>
+                <td>较高 (简单合约)</td>
+                <td class="confidence-medium">0.65</td>
+                <td class="false-positive">0.35</td>
+            </tr>
+                </table>
+                
+                <h3>传统检测器</h3>
+                <table>
+                    <tr>
+                        <th>漏洞类型</th>
+                        <th>数量</th>
+                        <th>百分比</th>
+                        <th>严重程度</th>
+                        <th>检出率</th>
+                    </tr>
+                    <tr>
+                <td>access_control</td>
+                <td>9</td>
+                <td>17.0%</td>
+                <td class="severity-high">高危</td>
+                <td>较高 (简单合约)</td>
+                <td class="confidence-high">0.85</td>
+                <td class="false-positive">0.15</td>
+            </tr><tr>
+                <td>reentrancy</td>
+                <td>10</td>
+                <td>18.9%</td>
+                <td class="severity-high">高危</td>
+                <td>较高 (简单合约)</td>
+                <td class="confidence-high">0.85</td>
+                <td class="false-positive">0.15</td>
+            </tr><tr>
+                <td>unchecked_call</td>
+                <td>34</td>
+                <td>64.2%</td>
+                <td class="severity-medium">中危</td>
+                <td>较高 (简单合约)</td>
+                <td class="confidence-medium">0.65</td>
+                <td class="false-positive">0.35</td>
+            </tr>
+                </table>
+            </div>
+            
+            <h2>漏洞检测对比分析</h2>
+            <div class="vulnerability-analysis">
+                <p>以下是两种检测器在不同类型漏洞上的检测能力对比分析：</p>
+                <table>
+                    <tr>
+                        <th>漏洞类型</th>
+                        <th>MMDetector检出数</th>
+                        <th>传统检测器检出数</th>
+                        <th>差异</th>
+                        <th>分析</th>
+                    </tr>
+                    <tr>
+                <td>access_control</td>
+                <td>954</td>
+                <td>9</td>
+                <td class="highlight">+945</td>
+                <td>MMDetector在access_control漏洞检测上表现更好，多检出945个漏洞</td>
+            </tr><tr>
+                <td>integer_overflow</td>
+                <td>1794</td>
+                <td>0</td>
+                <td class="highlight">+1794</td>
+                <td>MMDetector在integer_overflow漏洞检测上表现更好，多检出1794个漏洞</td>
+            </tr><tr>
+                <td>reentrancy</td>
+                <td>10</td>
+                <td>10</td>
+                <td class="">0</td>
+                <td>两种检测器检出能力相当</td>
+            </tr><tr>
+                <td>tx_origin</td>
+                <td>513</td>
+                <td>0</td>
+                <td class="highlight">+513</td>
+                <td>MMDetector在tx_origin漏洞检测上表现更好，多检出513个漏洞</td>
+            </tr><tr>
+                <td>unchecked_call</td>
+                <td>713</td>
+                <td>34</td>
+                <td class="highlight">+679</td>
+                <td>MMDetector在unchecked_call漏洞检测上表现更好，多检出679个漏洞</td>
+            </tr>
+                </table>
+            </div>
+            
+            <div class="footer">
+                <p>报告生成时间: 2025-04-15 16:27:49 | DAppSCAN-bytecode 智能合约漏洞检测评估</p>
+            </div>
+        </body>
+        </html>
+        
